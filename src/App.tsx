@@ -1,26 +1,32 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import * as React from 'react';
+import Parent from './Parent';
+import Sample from './Sample';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+export interface ThemeContext {
+  light?: boolean;
+  setLight?: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
+export const AppTheme = React.createContext<ThemeContext>({});
+
+export const ThemeProvider = AppTheme.Provider;
+
+const App = () => {
+  const [light, setLight] = React.useState(true);
+
+  return (
+    <>
+      <div className='p-5'>
+        <h2>React State Management</h2>
+        <hr />
+        <ThemeProvider value={{ light, setLight }}>
+          <Parent />
+          <hr />
+          <Sample />
+        </ThemeProvider>
+      </div>
+    </>
+  );
+};
 
 export default App;
